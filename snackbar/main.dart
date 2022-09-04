@@ -142,7 +142,24 @@ class ThirdPage extends StatelessWidget {
 }
 
 //과거 SnackBar 구현 코드
-// Center(
+
+//context는 BuildContext의 인스턴스
+//Scaffold.of(context)로 Scaffold의 위치를 참조한 뒤, showSnackBar()로 스낵바를 구현
+//SnackBar는 Scaffold위에 그려져야 하기 때문에 Scaffold의 위치를 참조하여 그 곳에 SnackBar를 그릴 수 있도록 알려줘야 함
+
+//Scaffold.of(context) method : 현재 주어진 context에서 위로 올라가면서 가장 가까운 Scaffold를 찾아서 반환
+//Something.of(context) : 위로 거슬러 올라가면서 가장 가까운 Something을 찾아서 반환 (예. Theme.of(context))
+
+//Scafold.of(context)를 찾아가다 보면 Scaffold가 MyApp 위젯에 속해있으므로 MyApp위젯의 상위 위젯들에서 Scaffold를 찾는 현상이 일어나지만
+//상위 위젯들에서 Scaffold가 구현되어 있지 않으므로 찾을 수 없음
+//Scaffold 보다 하위 위젯에서 Scaffold위젯을 찾게 하기 위해 Builder위젯을 사용
+//Builder위젯은 지금까지 사용하던 context는 무시하고 새로운 context를 생성하여 사용하도록 함
+//Scaffold위젯 하단에 Builder위젯을 사용하면 Scaffold.of(context)는 이 Builder부분부터 위로 거슬러 올라가면서 찾으므로 Scaffold를 찾을 수 있게 됨
+
+
+// body: Builder(
+//   builder: (BuildContext ctx) {
+//      return Center(
 //         child: FlatButton(
 //             child: Text(
 //               'Show me',
@@ -152,9 +169,10 @@ class ThirdPage extends StatelessWidget {
 //             ),
 //             color: Colors.red,
 //             onPressed: () {
-//               //Scaffold.of(context)로 Scaffold의 위치를 참조한 뒤, showSnackBar()로 스낵바를 구현
-//               ScaffoldMessenger.of(context)
+//               Scaffold.of(ctx)
 //                   .showSnackBar(Snackbar(content: Text('Hello')));
 //             }
 //         ),
-//       ),
+//       );
+//   },
+// )
