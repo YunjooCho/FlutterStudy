@@ -13,7 +13,14 @@ class FirstPage extends StatelessWidget {
         child: TextButton(
           child: Text('Go to Second Page'),
           onPressed: () {
-            Navigator.push(context2, MaterialPageRoute(builder: (context) => SecondPage())); //하단 주석 참조
+            //context2가 필요한 이유는 context2가 가지고 있는 위젯트리의 위치정보에 근거해 화면상에 보여지는 페이지가 어떤 페이지인지 확인하고 이 페이지에
+            //push함수가 이동하길 원하는 route를 쌓아올려야 하기 때문(First Page의 위치정보를 가지고 있음)
+            //builder는 어떤 위젯이 MaterialPageRoute를 통해 호출되어야 하는 지를 정의,
+            //해당 코드를 사용하는 이유는 일종의 안전장치로 route는 여기저기 호출되는데 이 과정에서
+            //다른 context를 사용하여 에러를 발생 시킬 수 있음, 이를 미연에 방지하는 기능이 builder를 통한 호출임
+            //context를 사용하지 않으므로 '_'(Underscore)로 변경
+            //SecondPage는 자체 context(context3)를 가지고 있고 pop()또한 context3를 사용하고 있기 때문에 여기서 '_'로 바꾸어도 영향이 없음
+            Navigator.push(context2, MaterialPageRoute(builder: (_) => SecondPage()));
             //Navigator.of(context2).push(_createRoute());
           },
         ),

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class SecondPage extends StatelessWidget {
   @override
-  Widget build(BuildContext context3) {
+  Widget build(BuildContext context3) { //context3 : Second Page의 context
     return Scaffold(
       appBar: AppBar(
         title: Text('Second Page'),
